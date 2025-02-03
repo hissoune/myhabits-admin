@@ -12,31 +12,30 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setIsLoading(true)
-    setError("")
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     try {
-      const response = await fetch("/api/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-      })
+      });
 
-      if (!response) {
-        throw new Error("Invalid credentials")
-      }
 
-      router.push("/dashboard")
-    } catch (error) {
-      setError("Invalid email or password")
-    } finally {
-      setIsLoading(false)
+      if (res.ok) {
+        
+          router.push("/dashboard");
+
+        }
+      
+    } catch (err) {
+      setError(`An error occurred. Please try again. ${err}`);
     }
-  }
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -45,7 +44,7 @@ export default function AdminLogin() {
           <Image src="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg" alt="Admine Logo" width={120} height={40} priority />
         </div>
         <h1 className="text-2xl font-bold text-center mb-6 text-amber-500">Admin Login</h1>
-        <form onSubmit={onSubmit} className="space-y-6">
+        <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
               Email
