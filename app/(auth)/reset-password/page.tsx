@@ -43,7 +43,7 @@ export default function ResetPassword() {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-center mb-8">
-          <Image src="/admine-logo.svg" alt="Admine Logo" width={120} height={40} priority />
+          <Image src="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg" alt="Admine Logo" width={120} height={40} priority />
         </div>
         <h1 className="text-2xl font-bold text-center mb-6 text-amber-500">Reset Password</h1>
         <form onSubmit={onSubmit} className="space-y-6">
