@@ -3,23 +3,30 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import Link from "next/link"
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-[family-name:var(--font-geist-sans)]">
-      <header className="fixed w-full z-10 bg-gray-900/80 backdrop-blur-sm">
+      <header className="fixed w-full z-10 bg-gray-800/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <Image src="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg" alt="Admine logo" width={50} height={40} priority />
+            <Image
+              src="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg"
+              alt="Admine logo"
+              width={50}
+              height={40}
+              priority
+            />
           </motion.div>
           <nav className="hidden md:flex gap-6">
             {["Features", "Pricing", "About"].map((item, index) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-gray-300 hover:text-purple-400 transition-colors"
+                className="text-gray-300 hover:text-amber-400 transition-colors"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -38,7 +45,7 @@ export default function Home() {
 
       {isMenuOpen && (
         <motion.div
-          className="fixed inset-0 bg-gray-900 z-20 flex flex-col items-center justify-center"
+          className="fixed inset-0 bg-gray-800 z-20 flex flex-col items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -55,7 +62,7 @@ export default function Home() {
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="text-2xl text-gray-300 hover:text-purple-400 transition-colors my-4"
+              className="text-2xl text-gray-300 hover:text-amber-400 transition-colors my-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -70,7 +77,7 @@ export default function Home() {
       <main className="pt-24 pb-12 px-4">
         <div className="container mx-auto">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold text-center mb-6"
+            className="text-4xl md:text-6xl font-bold text-center mb-6 text-amber-500"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -96,16 +103,16 @@ export default function Home() {
           >
             <a
               href="#get-started"
-              className="bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 transition-colors"
+              className="bg-amber-500 text-gray-900 px-8 py-3 rounded-full hover:bg-amber-600 transition-colors"
             >
               Start Your Journey
             </a>
-            <a
-              href="#learn-more"
-              className="bg-gray-800 text-gray-300 px-8 py-3 rounded-full hover:bg-gray-700 transition-colors"
+            <Link
+              href="/login"
+              className="bg-gray-700 text-gray-300 px-8 py-3 rounded-full hover:bg-gray-600 transition-colors"
             >
-             Admin Log in 
-            </a>
+              Admin Log in
+            </Link>
           </motion.div>
           <motion.div
             className="relative"
@@ -120,29 +127,12 @@ export default function Home() {
               height={300}
               className="rounded-xl shadow-2xl"
             />
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-            <div className="absolute -bottom-8 right-0 w-32 h-32 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-            <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-amber-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute -bottom-8 right-0 w-32 h-32 bg-amber-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
           </motion.div>
         </div>
       </main>
-
-      <footer className="bg-gray-800 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400">
-            <a href="#privacy" className="hover:text-purple-400 transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#terms" className="hover:text-purple-400 transition-colors">
-              Terms of Service
-            </a>
-            <a href="#contact" className="hover:text-purple-400 transition-colors">
-              Contact Us
-            </a>
-            <p>© 2025 Admine. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
