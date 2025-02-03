@@ -1,8 +1,8 @@
 "use client"
-import React, { ElementType } from 'react'
+import React, { ElementType, useState } from 'react'
 import { Home, Users, Clipboard, Trophy, UserPlus, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
  
 interface SidebarLinkProps {
     href: string;
@@ -14,9 +14,35 @@ interface SidebarLinkProps {
   }
 
 const Sidebar = () =>{
-    const path = usePathname();
-
+      const [isLoading, setIsLoading] = useState(false)
     
+    const path = usePathname();
+  const router = useRouter();
+
+    async function onlogout(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        setIsLoading(true)
+    
+        try {
+          const response = await fetch("/api/logout", {
+            method: "DELETE",
+           
+          })
+    
+          if (!response.ok) {
+            throw new Error("Invalid credentials")
+          }else {
+                      router.push("/login")
+
+          }
+    
+        } catch (error) {
+          console.log(("Invalid email or password"));
+          
+        } finally {
+          setIsLoading(false)
+        }
+      }
     
     return (
     
@@ -31,7 +57,7 @@ const Sidebar = () =>{
           <SidebarLink href="/groups" icon={UserPlus} label="Groups" path={path}/>
         </nav>
       </div>
-      <SidebarLink href="/logout" icon={LogOut} label="Logout" className="text-red-500"path={path} />
+      <SidebarLink href="/api/logout" icon={LogOut} label="Logout" className="text-red-500"path={path} />
     </div>
   );
 }
