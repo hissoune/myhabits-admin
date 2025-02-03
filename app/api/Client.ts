@@ -2,7 +2,7 @@ import axios from "axios";
 import { cookies } from "next/headers"; 
 
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.8.254:3000/api/',
+  baseURL: 'http://192.168.8.191:3000/',
 });
 
 axiosInstance.interceptors.request.use(
@@ -10,6 +10,7 @@ axiosInstance.interceptors.request.use(
     const token = (await cookies()).get("token")?.value; 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.headers["Content-Type"]=["application/json"]
     }
     return config;
   },
