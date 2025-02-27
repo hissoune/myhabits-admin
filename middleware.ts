@@ -24,7 +24,7 @@ export async function middleware(req: NextRequest) {
 
       
     
-      const response = await axiosInstance.get(`auth/verify`);
+      const response = await axiosInstance.get(`auth-service/auth/verify`);
       
       if (response.status == 401) {
         return NextResponse.redirect(new URL("/login", req.url));
