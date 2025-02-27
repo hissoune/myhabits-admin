@@ -32,7 +32,7 @@ export default function RootLayout({
 
         </main>
 
-        <footer className="bg-gray-800 py-8">
+        <footer className="bg-gray-900 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400">
             <a href="#privacy" className="hover:text-purple-400 transition-colors">
