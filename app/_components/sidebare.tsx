@@ -46,12 +46,12 @@ const Sidebar = () =>{
     
     return (
     
-    <div className="bg-gray-800 text-gray-300 w-64 min-h-screen p-6 flex flex-col justify-between">
+    <div className="bg-gray-900 text-gray-300 w-64 min-h-screen p-6 flex flex-col justify-between">
       <div>
         <h2 className="text-2xl font-bold text-amber-500 mb-6">Admin Panel</h2>
         <nav className="space-y-4">
           <SidebarLink href="/dashboard" icon={Home} label="Dashboard" path={path}/>
-          <SidebarLink href="/users" icon={Users} label="Users" path={path}/>
+          <SidebarLink href="/dashboard/users" icon={Users} label="Users" path={path}/>
           <SidebarLink href="/habits" icon={Clipboard} label="Habits" path={path}/>
           <SidebarLink href="/challenges" icon={Trophy} label="Challenges" path={path} />
           <SidebarLink href="/groups" icon={UserPlus} label="Groups" path={path}/>
