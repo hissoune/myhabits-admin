@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     try {
-        const response = await axiosInstance.post(`auth/login`, { email, password });
+        const response = await axiosInstance.post(`auth-service/auth/login`, { email, password });
 
         if (!response.data.token) {
             return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
