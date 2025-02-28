@@ -52,7 +52,7 @@ const Sidebar = () =>{
         <nav className="space-y-4">
           <SidebarLink href="/dashboard" icon={Home} label="Dashboard" path={path}/>
           <SidebarLink href="/dashboard/users" icon={Users} label="Users" path={path}/>
-          <SidebarLink href="/habits" icon={Clipboard} label="Habits" path={path}/>
+          <SidebarLink href="/dashboard/habits" icon={Clipboard} label="Habits" path={path}/>
           <SidebarLink href="/challenges" icon={Trophy} label="Challenges" path={path} />
           <SidebarLink href="/groups" icon={UserPlus} label="Groups" path={path}/>
         </nav>
