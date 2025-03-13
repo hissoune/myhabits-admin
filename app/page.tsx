@@ -2,13 +2,31 @@
 
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { CheckCircle, BarChart3, Calendar, TrendingUp, Award, Bell, ArrowRight } from "lucide-react"
+import { useAppDispatch } from "./hooks/useAppDispatch"
+import { useRouter } from "next/navigation"
+import { loadUser } from "./store/slices/authSlice"
+import { useSelector } from "react-redux"
+import { RootState } from "./store"
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+    const dispatch = useAppDispatch();
+    const router = useRouter()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const {inAuth}=useSelector((state:RootState)=>state.auth)
+useEffect(()=>
+{
+  if (inAuth)
+  {
+    router.push("/dashboard")
+    
+  }
+
+  dispatch(loadUser())
+},[inAuth])
   const features = [
     {
       icon: <CheckCircle className="w-6 h-6 text-amber-500" />,
