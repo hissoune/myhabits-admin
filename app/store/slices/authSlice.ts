@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '@/types';
 import Cookies from 'js-cookie';
+import { getAllUsers } from '@/app/api/usersApi';
 
 const initialState:{
     user: User |null,
@@ -68,8 +69,8 @@ export const loadUser = createAsyncThunk(
 export const getAllUsersAction = createAsyncThunk(
     "auth/allUsers",
     async ()=>{
-        // const users = await getAllUsers();
-        // return users
+        const users = await getAllUsers();
+        return users
     }
 );
 
@@ -138,7 +139,7 @@ const authSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(getAllUsersAction.fulfilled, (state,action)=>{
-                //  state.users = action.payload,
+                 state.users = action.payload,
                 state.isLoading = false
             })
             .addCase(getAllUsersAction.rejected, (state)=>{
