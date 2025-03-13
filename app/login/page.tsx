@@ -6,6 +6,9 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { useAppDispatch } from "../hooks/useAppDispatch"
+import { loginAction } from "../store/slices/authSlice"
+import { useRouter } from "next/navigation"
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("")
@@ -13,7 +16,8 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+  const dispatch = useAppDispatch();
+  const router = useRouter()
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return re.test(String(email).toLowerCase())
@@ -36,8 +40,9 @@ const LoginPage: React.FC = () => {
     setIsLoading(true)
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      await dispatch(loginAction({ email, password }))
       console.log("Login successful")
+      router.push("/dashboard")
     } catch (err) {
       setError("Login failed. Please check your credentials.")
     } finally {
