@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Bell, Search, ChevronDown, Menu, Download, Filter } from "lucide-react"
 import { useSelector } from "react-redux"
 import { RootState } from "@/app/store"
+import Image from "next/image"
 
 interface HeaderProps {
   title: string
@@ -158,9 +159,10 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick }) => {
         <div className="relative">
           <button onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-gray-900 font-bold">
-              A
+             <Image src={user?.image || "/default-profile.png"} alt="User profile image"
+              width={32} height={32} className="rounded-full"/>
             </div>
-            <span className="hidden md:block text-sm">Admin User</span>
+            <span className="hidden md:block text-sm">{user?.name}</span>
             <ChevronDown size={16} className="hidden md:block text-gray-400" />
           </button>
 
@@ -168,7 +170,7 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick }) => {
             <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-50">
               <div className="p-3 border-b border-gray-700">
                 <p className="font-medium">{user?.name}</p>
-                <p className="text-gray-400 text-xs">admin@admine.com</p>
+                <p className="text-gray-400 text-xs">{user?.email}</p>
               </div>
               <div className="py-1">
                 <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">
