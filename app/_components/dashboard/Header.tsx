@@ -63,16 +63,7 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick }) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative hidden md:block">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-4 w-4 text-gray-500" />
-          </div>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-gray-700 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors w-64"
-          />
-        </div>
+        
 
         <div className="relative">
           <button
@@ -119,43 +110,7 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick }) => {
           )}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
-          <div className="relative">
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition-colors"
-            >
-              <Filter size={16} />
-              <span>Filter</span>
-              <ChevronDown size={16} />
-            </button>
-
-            {isFilterOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-40">
-                <div className="py-1">
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                    Last 24 hours
-                  </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                    Last 7 days
-                  </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                    Last 30 days
-                  </button>
-                  <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                    Custom range
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm hover:bg-gray-700 transition-colors">
-            <Download size={16} />
-            <span>Export</span>
-          </button>
-        </div>
-
+      
         <div className="relative">
           <button onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-gray-900 font-bold">
