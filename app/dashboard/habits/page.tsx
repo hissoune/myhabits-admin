@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/app/hooks/useAppDispatch"
 import type { RootState } from "@/app/store"
-import { getAllHabitsAction } from "@/app/store/slices/habitsSlice"
+import { deleteHabitAction, getAllHabitsAction, reActiveHabitAction } from "@/app/store/slices/habitsSlice"
 import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState, useEffect } from "react"
@@ -90,11 +90,14 @@ const HabitsPage: React.FC = () => {
   }
 
   const handleDelete = (habitId: string) => {
+   
     setConfirmAction({ type: "delete", habitId })
   }
 
   const confirmReactivate = () => {
     if (confirmAction?.habitId) {
+        dispatch(reActiveHabitAction(confirmAction?.habitId))
+
       console.log(`Reactivate habit ${confirmAction.habitId}`)
       setConfirmAction(null)
     }
@@ -102,6 +105,7 @@ const HabitsPage: React.FC = () => {
 
   const confirmDelete = () => {
     if (confirmAction?.habitId) {
+        dispatch(deleteHabitAction(confirmAction?.habitId))
       console.log(`Delete habit ${confirmAction.habitId}`)
       setConfirmAction(null)
     }
@@ -321,13 +325,7 @@ const HabitsPage: React.FC = () => {
             )}
           </div>
 
-          <button
-            className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-gray-900 rounded-lg text-sm hover:bg-amber-400 transition-colors"
-            onClick={() => router.push("/dashboard/habits/create")}
-          >
-            <Plus size={16} />
-            <span>New Habit</span>
-          </button>
+        
         </div>
       </motion.div>
 
