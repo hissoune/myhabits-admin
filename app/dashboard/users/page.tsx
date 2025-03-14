@@ -198,7 +198,7 @@ const UsersPage: React.FC = () => {
                         </button>
 
                         {isActionMenuOpen === user._id && (
-                          <div className="absolute  right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl ">
+                          <div className="absolute  right-0 bottom-5 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl ">
                             <div className="py-1">
                               <button
                                 className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
