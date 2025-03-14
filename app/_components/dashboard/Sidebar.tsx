@@ -5,7 +5,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, Users, CheckCircle, Award, BarChart3, Settings, LogOut, ChevronDown, X } from "lucide-react"
+import {  Users, CheckCircle, Award, BarChart3, LogOut, ChevronDown, X } from "lucide-react"
 
 interface SidebarProps {
   isMobile?: boolean
@@ -17,7 +17,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) =>
   const pathname = usePathname()
 
   const navItems = [
-    { name: "Overview", icon: <Home size={20} />, path: "/dashboard" },
     { name: "Statistics", icon: <BarChart3 size={20} />, path: "/dashboard/statistics" },
     { name: "Users", icon: <Users size={20} />, path: "/dashboard/users" },
     { name: "Habits", icon: <CheckCircle size={20} />, path: "/dashboard/habits" },
@@ -43,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) =>
             src="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg"
             alt="Admine logo"
             width={32}
-            height={32}
+            height={32} 
             className="rounded-md"
           />
           <span
