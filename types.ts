@@ -37,3 +37,16 @@ export type Habit=  {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export type chalenge = {
+    _id?:string,
+    title: string;
+    description: string;
+    image?: string;
+    creator?: User;
+    participants?: { userId: string, progress: number,userDetails?:User }[];
+    frequency:string,
+    repeats:number;
+    endDate: string;
+    startDate: string;
+}
