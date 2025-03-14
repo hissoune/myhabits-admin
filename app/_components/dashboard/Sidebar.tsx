@@ -22,7 +22,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) =>
     { name: "Users", icon: <Users size={20} />, path: "/dashboard/users" },
     { name: "Habits", icon: <CheckCircle size={20} />, path: "/dashboard/habits" },
     { name: "Challenges", icon: <Award size={20} />, path: "/dashboard/challenges" },
-    { name: "Settings", icon: <Settings size={20} />, path: "/dashboard/settings" },
   ]
 
   const isActive = (path: string) => {
