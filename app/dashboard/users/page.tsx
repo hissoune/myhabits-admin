@@ -29,7 +29,6 @@ const UsersPage: React.FC = () => {
     dispatch(getAllUsersAction())
   }, [dispatch])
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -49,7 +48,6 @@ const UsersPage: React.FC = () => {
     },
   }
 
-  // Filter users based on search term and role filter
   const filteredUsers = users.filter((user:User) => {
     const matchesSearch =
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -172,8 +170,8 @@ const UsersPage: React.FC = () => {
                             src={user.image || "/placeholder.svg"}
                             alt={user.name}
                             width={40}
-                            height={40}
-                            className="rounded-full object-cover"
+                            height={50}
+                            className="rounded-full "
                           />
                         ) : (
                           <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500 font-medium">
@@ -200,7 +198,7 @@ const UsersPage: React.FC = () => {
                         </button>
 
                         {isActionMenuOpen === user._id && (
-                          <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-40">
+                          <div className="absolute  right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl ">
                             <div className="py-1">
                               <button
                                 className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
@@ -245,7 +243,6 @@ const UsersPage: React.FC = () => {
           </table>
         </div>
 
-        {/* Pagination */}
         {filteredUsers.length > usersPerPage && (
           <div className="p-4 border-t border-gray-700/50 flex items-center justify-between">
             <div className="text-sm text-gray-400">
@@ -283,7 +280,6 @@ const UsersPage: React.FC = () => {
         )}
       </motion.div>
 
-      {/* Confirmation Modal */}
       {confirmAction && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 max-w-md w-full">
