@@ -1,7 +1,6 @@
 import { getAllHabits } from '@/app/api/habitsApi';
 import { Habit } from '@/types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { stat } from 'fs';
 
 
 const initialState:{
@@ -21,7 +20,6 @@ export  const getAllHabitsAction = createAsyncThunk(
     "habits/all",
     async ()=>{
         const habits = await getAllHabits();
-        console.log(habits);
         
         return habits
     }
