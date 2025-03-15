@@ -7,6 +7,8 @@ import Header from "../_components/dashboard/Header"
 import { useAppDispatch } from "../hooks/useAppDispatch"
 import { useRouter } from "next/navigation"
 import { loadUser } from "../store/slices/authSlice"
+import { useSelector } from "react-redux"
+import { RootState } from "../store"
 
 export default function DashboardLayout({
   children,
@@ -16,10 +18,13 @@ export default function DashboardLayout({
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
+  const {inAuth}=useSelector((state:RootState)=>state.auth)
 
   useEffect(() => {
     dispatch(loadUser())
-  }, [dispatch])
+
+   
+  }, [dispatch, inAuth, router])
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex">
