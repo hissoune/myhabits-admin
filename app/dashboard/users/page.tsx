@@ -4,10 +4,10 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Search, Filter, MoreHorizontal, Trash2, ChevronDown, ChevronLeft, ChevronRight, UserIcon } from "lucide-react"
+import { Search, Filter, MoreHorizontal, Trash2, ChevronDown, ChevronLeft, ChevronRight, UserIcon, Unlock, Ban } from "lucide-react"
 import { useAppDispatch } from "@/app/hooks/useAppDispatch"
 import { useRouter } from "next/navigation"
-import { getAllUsersAction } from "@/app/store/slices/authSlice"
+import { banOrUnbanAction, getAllUsersAction } from "@/app/store/slices/authSlice"
 import { useSelector } from "react-redux"
 import type {  User } from "@/types"
 import { RootState } from "@/app/store"
@@ -69,6 +69,7 @@ const UsersPage: React.FC = () => {
 
   const confirmDelete = () => {
     if (confirmAction?.userId) {
+      dispatch(banOrUnbanAction(confirmAction.userId))
       console.log(`Delete user ${confirmAction.userId}`)
       setConfirmAction(null)
     }
@@ -156,6 +157,7 @@ const UsersPage: React.FC = () => {
                 <th className="p-4 font-medium">User</th>
                 <th className="p-4 font-medium">Role</th>
                 <th className="p-4 font-medium">Birth Date</th>
+                <th className="p-4 font-medium">Activity</th>
                 <th className="p-4 font-medium">Actions</th>
               </tr>
             </thead>
@@ -188,6 +190,7 @@ const UsersPage: React.FC = () => {
                       <span className="capitalize">{user.role || "user"}</span>
                     </td>
                     <td className="p-4 text-gray-400">{formatDate(user.birthDay)}</td>
+                    <td className={`${user.isBaned? 'p-4 text-red-400' :'p-4 text-green-400' }`}>{user.isBaned?"banned":"Active"}</td>
                     <td className="p-4">
                       <div className="relative">
                         <button
@@ -201,11 +204,11 @@ const UsersPage: React.FC = () => {
                           <div className="absolute  right-0 bottom-5 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl ">
                             <div className="py-1">
                               <button
-                                className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
+                                className={`w-full text-left px-4 py-2 text-sm ${user.isBaned ?'text-green-400':'text-red-400'} hover:bg-gray-700 transition-colors flex items-center gap-2`}
                                 onClick={() => handleDelete(user._id || "")}
                               >
-                                <Trash2 size={16} />
-                                <span>Delete User</span>
+                                 {user.isBaned ? <Unlock size={16} /> : <Ban size={16} />}              
+                                  <span>{user.isBaned?"Unban":"Ban"} user</span>
                               </button>
                             </div>
                           </div>
