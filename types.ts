@@ -4,6 +4,7 @@ export type User ={
     email:string,
     password?:string,
     birthDay:Date|null,
+    isBaned:boolean
     image:string
     role?:string
 }
