@@ -4,8 +4,10 @@ import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {  Users, CheckCircle, Award, BarChart3, LogOut, ChevronDown, X } from "lucide-react"
+import { useAppDispatch } from "@/app/hooks/useAppDispatch"
+import { logoutAction } from "@/app/store/slices/authSlice"
 
 interface SidebarProps {
   isMobile?: boolean
@@ -15,7 +17,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
-
+    const dispatch = useAppDispatch()
+    const router = useRouter()
   const navItems = [
     { name: "Statistics", icon: <BarChart3 size={20} />, path: "/dashboard/statistics" },
     { name: "Users", icon: <Users size={20} />, path: "/dashboard/users" },
@@ -97,6 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) =>
       <div className="p-4 border-t border-gray-700/50">
         <button
           className={`flex items-center gap-3 w-full p-3 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors ${isCollapsed ? "justify-center" : ""}`}
+          onClick={()=>dispatch(logoutAction())}
         >
           <LogOut size={20} />
           <span className={`transition-opacity duration-300 ${isCollapsed ? "opacity-0 hidden" : "opacity-100"}`}>
