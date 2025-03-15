@@ -2,7 +2,11 @@
 
 import { useAppDispatch } from "@/app/hooks/useAppDispatch"
 import type { RootState } from "@/app/store"
-import { getAllChalengesAction } from "@/app/store/slices/chalengesSlice"
+import {
+  createChallengeAction,
+  deletChalengeAction,
+  getAllChalengesAction,
+} from "@/app/store/slices/chalengesSlice"
 import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState, useEffect } from "react"
@@ -22,14 +26,18 @@ import {
   ChevronRight,
   Plus,
   Trophy,
+  Edit,
 } from "lucide-react"
 import Image from "next/image"
+import { getAllUsersAction } from "@/app/store/slices/authSlice"
+import ChallengeModal from "@/app/_components/chalenges/challenge-modal"
 
 
 const ChallengesPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { chalenges = [], isLoading } = useSelector((state: RootState) => state.chalenges)
+  const { users = [] } = useSelector((state: RootState) => state.auth)
 
   const [searchTerm, setSearchTerm] = useState("")
   const [frequencyFilter, setFrequencyFilter] = useState<string>("all")
@@ -39,8 +47,14 @@ const ChallengesPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [challengesPerPage] = useState(6)
 
+  // Challenge modal state
+  const [showChallengeModal, setShowChallengeModal] = useState(false)
+  const [modalType, setModalType] = useState<"create" | "update">("create")
+  const [selectedChallenge, setSelectedChallenge] = useState<any>(null)
+
   useEffect(() => {
     dispatch(getAllChalengesAction())
+    dispatch(getAllUsersAction())
   }, [dispatch])
 
   const containerVariants = {
@@ -87,10 +101,32 @@ const ChallengesPage: React.FC = () => {
     router.push(`/dashboard/challenges/${challengeId}/participants`)
   }
 
+  const handleEdit = (challenge: any) => {
+    setSelectedChallenge(challenge)
+    setModalType("update")
+    setShowChallengeModal(true)
+    setIsActionMenuOpen(null)
+  }
+
+  const handleCreateNew = () => {
+    setSelectedChallenge(null)
+    setModalType("create")
+    setShowChallengeModal(true)
+  }
+
   const confirmDelete = () => {
     if (confirmAction?.challengeId) {
+      dispatch(deletChalengeAction(confirmAction?.challengeId))
       console.log(`Delete challenge ${confirmAction.challengeId}`)
       setConfirmAction(null)
+    }
+  }
+
+  const handleChallengeSubmit = (challenge: any) => {
+    if (modalType === "create") {
+      dispatch(createChallengeAction(challenge))
+    } else {
+      // dispatch(updateChallengeAction(challenge))
     }
   }
 
@@ -226,7 +262,7 @@ const ChallengesPage: React.FC = () => {
 
           <button
             className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-gray-900 rounded-lg text-sm hover:bg-amber-400 transition-colors"
-            onClick={() => router.push("/dashboard/challenges/create")}
+            onClick={handleCreateNew}
           >
             <Plus size={16} />
             <span>New Challenge</span>
@@ -254,7 +290,7 @@ const ChallengesPage: React.FC = () => {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="absolute bottom-10 left-0 right-0 p-4">
                     <div className="flex justify-between items-center">
                       <h3 className="text-lg font-semibold text-white line-clamp-1">{challenge.title}</h3>
                       <div className="relative">
@@ -268,14 +304,15 @@ const ChallengesPage: React.FC = () => {
                         </button>
 
                         {isActionMenuOpen === challenge._id && (
-                          <div className="absolute right-0 bottom-5 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-40">
+                          <div className="absolute bottom-10 right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-40">
                             <div className="py-1">
+                            
                               <button
-                                className="w-full text-left px-4 py-2 text-sm text-blue-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
-                                onClick={() => handleAddParticipants(challenge._id || "")}
+                                className="w-full text-left px-4 py-2 text-sm text-green-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
+                                onClick={() => handleEdit(challenge)}
                               >
-                                <UserPlus size={16} />
-                                <span>Add Participants</span>
+                                <Edit size={16} />
+                                <span>Edit Challenge</span>
                               </button>
                               <button
                                 className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors flex items-center gap-2"
@@ -376,7 +413,7 @@ const ChallengesPage: React.FC = () => {
                 {chalenges.length === 0 ? (
                   <button
                     className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-gray-900 rounded-lg text-sm hover:bg-amber-400 transition-colors"
-                    onClick={() => router.push("/dashboard/challenges/create")}
+                    onClick={handleCreateNew}
                   >
                     <Plus size={16} />
                     <span>Create First Challenge</span>
@@ -459,6 +496,15 @@ const ChallengesPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      <ChallengeModal
+        isOpen={showChallengeModal}
+        onClose={() => setShowChallengeModal(false)}
+        onSubmit={handleChallengeSubmit}
+        challenge={selectedChallenge}
+        users={users}
+        modalType={modalType}
+      />
     </motion.div>
   )
 }
