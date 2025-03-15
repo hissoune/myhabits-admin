@@ -3,7 +3,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '@/types';
 import Cookies from 'js-cookie';
-import { getAllUsers } from '@/app/api/usersApi';
+import { banOrUnban, getAllUsers } from '@/app/api/usersApi';
+import { login } from '@/app/api/authApi';
+import { deleteCookie, setCookie } from 'cookies-next';
 
 const initialState:{
     user: User |null,
@@ -32,19 +34,8 @@ export const loginAction= createAsyncThunk(
     "auth/login",
     async (Credentials:{email:string,password:string},{ rejectWithValue })=>{
      try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: Credentials.email, password: Credentials.password }),
-          });
-
-          if (!response.ok) {
-            throw new Error('Invalid credentials');
-          }
-
-          const data = await response.json();
-
-          return data;
+       const loggedIn = await login(Credentials);
+       return loggedIn
      } catch (error) {
         if (error instanceof Error) {
             return rejectWithValue(error.message);
@@ -74,16 +65,25 @@ export const getAllUsersAction = createAsyncThunk(
     }
 );
 
+export const  banOrUnbanAction = createAsyncThunk(
+    "users/ban",
+    async (userId:string)=>{
+      const user = await banOrUnban(userId)
+      return user
+    }
+);
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logoutAction:  (state)=>{
-           state.user = null ;
-           state.token = null;
-           Cookies.remove('token');
-           Cookies.remove('user');
-           state.inAuth = false;
+        logoutAction: (state) => {
+            state.user = null;
+            state.token = null;
+            state.inAuth= false
+            deleteCookie('token');
+            deleteCookie('role');
+         
          
         }
     },
@@ -126,8 +126,16 @@ const authSlice = createSlice({
                  state.user = action.payload.user;                 
                 state.inAuth = true
                 state.token = action.payload.token;
-                Cookies.set('token', action.payload.token, { expires: 7 });
-                Cookies.set('user', JSON.stringify(action.payload.user), { expires: 7 }); 
+                setCookie('token', action.payload.token, {
+                    httpOnly: false,
+                    secure: process.env.NODE_ENV === 'production',
+                    path: '/',
+                  });
+                  setCookie('user', action.payload.user, {
+                    httpOnly: false,
+                    secure: process.env.NODE_ENV === 'production',
+                    path: '/',
+                  });
                 state.isLoading = false
 
             })
@@ -143,6 +151,16 @@ const authSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(getAllUsersAction.rejected, (state)=>{
+                state.error ="not for you "
+            })
+            .addCase(banOrUnbanAction.pending, (state)=>{
+                state.isLoading = true
+            })
+            .addCase(banOrUnbanAction.fulfilled, (state,action)=>{
+                 state.users =  state.users.map((user)=> user._id == action.payload._id ?action.payload:user)
+                state.isLoading = false
+            })
+            .addCase(banOrUnbanAction.rejected, (state)=>{
                 state.error ="not for you "
             })
             
