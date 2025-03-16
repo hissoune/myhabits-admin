@@ -4,9 +4,8 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Search, Filter, MoreHorizontal, Trash2, ChevronDown, ChevronLeft, ChevronRight, UserIcon, Unlock, Ban } from "lucide-react"
+import { Search, Filter, MoreHorizontal, ChevronDown, ChevronLeft, ChevronRight, UserIcon, Unlock, Ban } from "lucide-react"
 import { useAppDispatch } from "@/app/hooks/useAppDispatch"
-import { useRouter } from "next/navigation"
 import { banOrUnbanAction, getAllUsersAction } from "@/app/store/slices/authSlice"
 import { useSelector } from "react-redux"
 import type {  User } from "@/types"
@@ -22,7 +21,6 @@ const UsersPage: React.FC = () => {
   const [usersPerPage] = useState(5)
 
   const dispatch = useAppDispatch()
-  const router = useRouter()
   const { users = [] } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
