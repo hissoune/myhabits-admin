@@ -11,7 +11,7 @@ interface ChallengeModalProps {
   isOpen: boolean
   onClose: () => void
   onSubmit: (challenge: chalenge) => void
-  challenge?: chalenge
+  challenge?: chalenge|null
   users: User[]
   modalType: "create" | "update"
 }
