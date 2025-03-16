@@ -7,7 +7,6 @@ import {
   deletChalengeAction,
   getAllChalengesAction,
 } from "@/app/store/slices/chalengesSlice"
-import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
@@ -17,7 +16,6 @@ import {
   Filter,
   MoreHorizontal,
   Trash2,
-  UserPlus,
   Calendar,
   Users,
   Clock,
@@ -31,11 +29,11 @@ import {
 import Image from "next/image"
 import { getAllUsersAction } from "@/app/store/slices/authSlice"
 import ChallengeModal from "@/app/_components/chalenges/challenge-modal"
+import { chalenge } from "@/types"
 
 
 const ChallengesPage: React.FC = () => {
   const dispatch = useAppDispatch()
-  const router = useRouter()
   const { chalenges = [], isLoading } = useSelector((state: RootState) => state.chalenges)
   const { users = [] } = useSelector((state: RootState) => state.auth)
 
@@ -47,10 +45,9 @@ const ChallengesPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [challengesPerPage] = useState(6)
 
-  // Challenge modal state
   const [showChallengeModal, setShowChallengeModal] = useState(false)
   const [modalType, setModalType] = useState<"create" | "update">("create")
-  const [selectedChallenge, setSelectedChallenge] = useState<any>(null)
+  const [selectedChallenge, setSelectedChallenge] = useState<chalenge|null>(null)
 
   useEffect(() => {
     dispatch(getAllChalengesAction())
@@ -96,12 +93,9 @@ const ChallengesPage: React.FC = () => {
     setConfirmAction({ type: "delete", challengeId })
   }
 
-  const handleAddParticipants = (challengeId: string) => {
-    console.log(`Add participants to challenge ${challengeId}`)
-    router.push(`/dashboard/challenges/${challengeId}/participants`)
-  }
+ 
 
-  const handleEdit = (challenge: any) => {
+  const handleEdit = (challenge: chalenge) => {
     setSelectedChallenge(challenge)
     setModalType("update")
     setShowChallengeModal(true)
@@ -122,7 +116,7 @@ const ChallengesPage: React.FC = () => {
     }
   }
 
-  const handleChallengeSubmit = (challenge: any) => {
+  const handleChallengeSubmit = (challenge: chalenge) => {
     if (modalType === "create") {
       dispatch(createChallengeAction(challenge))
     } else {
