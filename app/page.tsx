@@ -26,7 +26,7 @@ useEffect(()=>
   }
 
   dispatch(loadUser())
-},[inAuth])
+},[inAuth,dispatch,router])
   const features = [
     {
       icon: <CheckCircle className="w-6 h-6 text-amber-500" />,
@@ -52,17 +52,17 @@ useEffect(()=>
 
   const testimonials = [
     {
-      quote: "Admine transformed my morning routine. I've been consistent for over 6 months now!",
+      quote: "Admine transformed my morning routine. I&quotve been consistent for over 6 months now!",
       author: "Sarah J.",
       role: "Fitness Coach",
     },
     {
-      quote: "The analytics help me understand my patterns and improve consistently. Best habit app I've used.",
+      quote: "The analytics help me understand my patterns and improve consistently. Best habit app I&quotve used.",
       author: "Michael T.",
       role: "Software Engineer",
     },
     {
-      quote: "I've tried many habit trackers, but Admine's simplicity and effectiveness is unmatched.",
+      quote: "I&quotve tried many habit trackers, but Admine&quots simplicity and effectiveness is unmatched.",
       author: "Elena R.",
       role: "Medical Student",
     },
@@ -493,7 +493,7 @@ useEffect(()=>
                     <p className="text-gray-400 text-sm">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-300 italic">"{testimonial.quote}"</p>
+                <p className="text-gray-300 italic">{testimonial.quote}</p>
                 <div className="flex mt-4">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <svg key={star} className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
@@ -507,7 +507,6 @@ useEffect(()=>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-amber-500/20 to-amber-600/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5"></div>
         <div className="container mx-auto relative z-10">
@@ -527,7 +526,7 @@ useEffect(()=>
                 href="/signup"
                 className="bg-amber-500 text-gray-900 px-8 py-4 rounded-full hover:bg-amber-400 transition-colors text-center font-medium text-lg"
               >
-                Get Started — It's Free
+                Get Started — It&aposs Free
               </Link>
               <Link
                 href="/pricing"
@@ -540,7 +539,6 @@ useEffect(()=>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-800 py-12 border-t border-gray-700/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
