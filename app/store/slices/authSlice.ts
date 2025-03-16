@@ -102,7 +102,7 @@ const authSlice = createSlice({
                 state.isLoading=false
 
             })
-            .addCase(loadUser.rejected, (state, action) => {
+            .addCase(loadUser.rejected, (state) => {
                 state.isLoading = false;
                 state.error = 'user not exist';
             })
@@ -115,7 +115,7 @@ const authSlice = createSlice({
                 
                 state.isLoading = false;
             })
-            .addCase(registerAction.rejected, (state,action)=>{
+            .addCase(registerAction.rejected, (state)=>{
                 state.error = 'registration fail'
                 state.isLoading=false
             })
@@ -124,7 +124,7 @@ const authSlice = createSlice({
             })
             .addCase(loginAction.fulfilled, (state,action)=>{
                  state.user = action.payload.user;                 
-                state.inAuth = true
+                state.inAuth = true;
                 state.token = action.payload.token;
                 setCookie('token', action.payload.token, {
                     httpOnly: false,
@@ -147,7 +147,7 @@ const authSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(getAllUsersAction.fulfilled, (state,action)=>{
-                 state.users = action.payload,
+                 state.users = action.payload;
                 state.isLoading = false
             })
             .addCase(getAllUsersAction.rejected, (state)=>{
@@ -157,7 +157,7 @@ const authSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(banOrUnbanAction.fulfilled, (state,action)=>{
-                 state.users =  state.users.map((user)=> user._id == action.payload._id ?action.payload:user)
+                 state.users =  state.users.map((user)=> user._id == action.payload._id ?action.payload:user);
                 state.isLoading = false
             })
             .addCase(banOrUnbanAction.rejected, (state)=>{
