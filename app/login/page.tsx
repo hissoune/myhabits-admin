@@ -44,6 +44,8 @@ const LoginPage: React.FC = () => {
       console.log("Login successful")
       router.push("/dashboard")
     } catch (err) {
+      console.log(err);
+      
       setError("Login failed. Please check your credentials.")
     } finally {
       setIsLoading(false)
@@ -203,7 +205,7 @@ const LoginPage: React.FC = () => {
 
           <div className="mt-6 text-center">
             <p className="text-gray-400 text-sm">
-              Don't have an account?{" "}
+              Don&apost have an account?{" "}
               <Link href="/signup" className="text-amber-400 hover:text-amber-300 transition-colors">
                 Sign up
               </Link>
