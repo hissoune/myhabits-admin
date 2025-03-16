@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
-import { Bell, Search, ChevronDown, Menu, Download, Filter } from "lucide-react"
+import { Bell, ChevronDown, Menu } from "lucide-react"
 import { useSelector } from "react-redux"
 import { RootState } from "@/app/store"
 import Image from "next/image"
@@ -17,7 +17,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, subtitle, onMenuClick }) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
  const {user, isLoading} = useSelector((state:RootState) => state.auth);
   const notifications = [
     {
