@@ -76,9 +76,8 @@ jest.mock('../Client', () => ({
 });
 
 it('getAllChalenges should handle errors correctly', async () => {
-    const errorMessage = "Network Error";
 
-    (axiosInstance.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    (axiosInstance.get as jest.Mock).mockRejectedValue("Failed to fetch challenges");
 
     await expect(getAllChalenges()).rejects.toThrow("Failed to fetch challenges");
 
@@ -150,7 +149,6 @@ const mockResponse:chalenge = {
   });
 
   it('should handle errors correctly', async () => {
-    const errorMessage = "Internal Server Error";
 
     const mockChallenge = {
         _id: "67c1109eab1d32fe06b43624",
@@ -203,7 +201,7 @@ const mockResponse:chalenge = {
         image: "https://i.pinimg.com/236x/59/92/12/59921222523f839ef82.jpg"
     };
 
-    (axiosInstance.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
+    (axiosInstance.post as jest.Mock).mockRejectedValue("Failed to create challenge");
 
     await expect(createChallenge(mockChallenge)).rejects.toThrow("Failed to create challenge");
 
