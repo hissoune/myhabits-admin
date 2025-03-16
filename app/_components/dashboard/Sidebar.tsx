@@ -4,7 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {  Users, CheckCircle, Award, BarChart3, LogOut, ChevronDown, X } from "lucide-react"
 import { useAppDispatch } from "@/app/hooks/useAppDispatch"
 import { logoutAction } from "@/app/store/slices/authSlice"
@@ -18,7 +18,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobile = false, onMobileClose }) =>
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
     const dispatch = useAppDispatch()
-    const router = useRouter()
   const navItems = [
     { name: "Statistics", icon: <BarChart3 size={20} />, path: "/dashboard/statistics" },
     { name: "Users", icon: <Users size={20} />, path: "/dashboard/users" },
