@@ -1,10 +1,12 @@
 module.exports = {
-    testEnvironment: 'node', 
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    preset: 'ts-jest',  
+    testEnvironment: 'node',  
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+      '^.+\\.tsx?$': 'ts-jest',  
     },
-    moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/$1',
-    },
+    transform: {
+        '^.+\\.tsx?$': ['ts-jest', {
+          isolatedModules: true, 
+        }],
+      },
   };
