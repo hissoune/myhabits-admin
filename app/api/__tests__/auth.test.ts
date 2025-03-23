@@ -1,22 +1,8 @@
 import { login } from '../authApi';
 import axiosInstance from '../Client'; 
-import {jest} from '@jest/globals';
-
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  birthDay: Date;
-  isBaned: boolean;
-  image: string;
-}
-
-interface LoginResponse {
-  token: string;
-  user: User;
-}
 
 jest.mock('../Client', () => ({
+   
     post: jest.fn(),
     patch: jest.fn(),
     delete: jest.fn(),
@@ -25,7 +11,7 @@ jest.mock('../Client', () => ({
   describe('auth tests ', () => {
     
     it('loginfunction must return a token and a user ',async () => {
-        const mockResponse: LoginResponse = {token:"cdcccccccccccjkkkkkkkkdbc",user:{
+        const mockResponse = {token:"cdcccccccccccjkkkkkkkkdbc",user:{
             _id: '1',
             name: 'John Doe',
             email: 'john.doe@example.com',
